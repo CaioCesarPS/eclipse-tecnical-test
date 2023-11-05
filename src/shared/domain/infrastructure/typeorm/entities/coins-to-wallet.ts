@@ -16,8 +16,8 @@ export class CoinsToWalletEntity {
   @Column({ name: 'wallet_id' })
   walletId: number;
 
-  @Column()
-  balance: number;
+  @Column({ name: 'coin_quantity' })
+  coinQuantity: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt?: Date;

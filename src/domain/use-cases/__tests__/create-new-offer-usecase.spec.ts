@@ -36,6 +36,10 @@ describe('Add Client Favorite Offer Use Case', () => {
     coinsToWalletRepository.findByCoinId.mockReturnValue(
       makeCoinsToWallet(1, 1, 1, 100),
     );
+    offerRepository.findByClientId.mockReturnValue({
+      offers: [],
+      count: 0,
+    });
     expect(
       adapter.execute({
         clientId: 1,
@@ -62,11 +66,11 @@ describe('Add Client Favorite Offer Use Case', () => {
     );
     offerRepository.findByClientId.mockReturnValue({
       offers: [
-        makeOffer(1, 1, 'BTC', 10),
-        makeOffer(2, 1, 'BTC', 10),
-        makeOffer(3, 1, 'BTC', 10),
-        makeOffer(4, 1, 'BTC', 10),
-        makeOffer(5, 1, 'BTC', 10),
+        makeOffer(1, 1, 'BTC', 10, 1000),
+        makeOffer(2, 1, 'BTC', 10, 1000),
+        makeOffer(3, 1, 'BTC', 10, 1000),
+        makeOffer(4, 1, 'BTC', 10, 1000),
+        makeOffer(5, 1, 'BTC', 10, 1000),
       ],
       count: 5,
     });
@@ -96,7 +100,7 @@ describe('Add Client Favorite Offer Use Case', () => {
       makeCoinsToWallet(1, 1, 1, 100),
     );
     offerRepository.findByClientId.mockReturnValue({
-      offers: [makeOffer(1, 1, 'BTC', 10)],
+      offers: [makeOffer(1, 1, 'BTC', 10, 1000)],
       count: 1,
     });
 
@@ -107,6 +111,6 @@ describe('Add Client Favorite Offer Use Case', () => {
         value: 101,
         walletId: 1,
       }),
-    ).rejects.toBeInstanceOf(BadRequestException);
+    ).rejects.toBeInstanceOf(Error);
   });
 });

@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { IClientRepository } from 'src/domain/repositories/client-repository';
+import { ClientRepository } from 'src/domain/repositories/client-repository';
 import { ClientsEntity } from '../entities/client-entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ClientAdapter implements IClientRepository {
+export class ClientAdapter implements ClientRepository {
   constructor(
     @InjectRepository(ClientsEntity)
     private readonly clientRepository: Repository<ClientsEntity>,

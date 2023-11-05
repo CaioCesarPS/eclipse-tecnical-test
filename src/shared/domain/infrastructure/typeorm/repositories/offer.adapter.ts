@@ -101,9 +101,9 @@ export class OfferAdapter implements OfferRepository {
       },
     });
 
-    const returnCoinToWallet = coinToWallet.balance + offer.value;
+    const returnCoinToWallet = coinToWallet.coinQuantity + offer.coinQuantity;
     await this.coinToWalletRepository.update(coinToWallet.id, {
-      balance: returnCoinToWallet,
+      coinQuantity: returnCoinToWallet,
     });
 
     await this.offerRepository.update(

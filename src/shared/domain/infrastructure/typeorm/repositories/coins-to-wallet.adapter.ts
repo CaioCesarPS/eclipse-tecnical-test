@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { ICoinsToWalletRepository } from 'src/domain/repositories/coins-to-wallet-repository';
+import { CoinsToWalletRepository } from 'src/domain/repositories/coins-to-wallet-repository';
 import { CoinsToWalletEntity } from '../entities/coins-to-wallet';
 
 @Injectable()
-export class CoinsToWalletAdapter implements ICoinsToWalletRepository {
+export class CoinsToWalletAdapter implements CoinsToWalletRepository {
   constructor(
     @InjectRepository(CoinsToWalletEntity)
     private readonly coinToWalletRepository: Repository<CoinsToWalletEntity>,
@@ -20,7 +20,7 @@ export class CoinsToWalletAdapter implements ICoinsToWalletRepository {
     const updatedCoinBalance = {
       coinId: coin.coinId,
       walletId: coin.walletId,
-      balance: coin.balance,
+      coinQuantity: coin.coinQuantity,
     };
 
     await this.coinToWalletRepository.update(coin.id, updatedCoinBalance);

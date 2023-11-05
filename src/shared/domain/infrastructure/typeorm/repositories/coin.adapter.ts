@@ -1,12 +1,12 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { ICoinRepository } from 'src/domain/repositories/coin-repository';
+import { CoinRepository } from 'src/domain/repositories/coin-repository';
 import { CoinEntity } from '../entities/coin-entity';
 import { Coin } from 'src/domain/entities/coin';
 
 @Injectable()
-export class CoinAdapter implements ICoinRepository {
+export class CoinAdapter implements CoinRepository {
   constructor(
     @InjectRepository(CoinEntity)
     private readonly coinRepository: Repository<CoinEntity>,

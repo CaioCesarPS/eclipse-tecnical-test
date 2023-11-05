@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { IWalletRepository } from 'src/domain/repositories/wallet-repository';
+import { WalletRepository } from 'src/domain/repositories/wallet-repository';
 import { WalletEntity } from '../entities/wallet-entity';
 
 @Injectable()
-export class WalletAdapter implements IWalletRepository {
+export class WalletAdapter implements WalletRepository {
   constructor(
     @InjectRepository(WalletEntity)
     private readonly walletRepository: Repository<WalletEntity>,

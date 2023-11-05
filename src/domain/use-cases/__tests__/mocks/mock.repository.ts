@@ -1,4 +1,5 @@
 import { ClientsEntity } from '../../../../shared/domain/infrastructure/typeorm/entities/client-entity';
+import { OffersEntity } from '../../../../shared/domain/infrastructure/typeorm/entities/offer-entity';
 
 export const makeClient = (id: number, name: string) => {
   const clientEntity = new ClientsEntity();
@@ -30,52 +31,63 @@ export const makeOffer = (
   id: number,
   clientId: number,
   coinName: string,
-  value: number,
+  coinQuantity: number,
+  totalOfferValue: number,
 ) => {
-  return {
-    id,
-    clientId,
-    coinName,
-    value,
-    createdAt: new Date(),
-  };
+  const offers = new OffersEntity();
+  offers.id = id;
+  offers.clientId = clientId;
+  offers.coinName = coinName;
+  offers.coinQuantity = coinQuantity;
+  offers.totalOfferValue = totalOfferValue;
+  offers.active = true;
+  offers.createdAt = new Date();
+  return offers;
 };
 
 export const makeCoinsToWallet = (
   id: number,
   coinId: number,
   walletId: number,
-  balance: number,
+  coinQuantity: number,
 ) => {
   return {
     id,
     coinId,
     walletId,
-    balance,
+    coinQuantity,
     createdAt: new Date(),
   };
 };
 
 export const clientRepository = {
   findById: jest.fn(),
+  findByClientId: jest.fn(),
 };
 
 export const walletRepository = {
-  findByClientId: jest.fn().mockImplementation((entity) => entity),
+  findByClientId: jest.fn(),
 };
 
 export const offerRepository = {
-  findByClientId: jest.fn().mockImplementation((entity) => entity),
+  findByClientId: jest.fn(),
   create: jest.fn(),
-  findById: jest.fn().mockImplementation((entity) => entity),
-  findByToday: jest.fn().mockImplementation((entity) => entity),
+  findById: jest.fn(),
+  findByToday: jest.fn(),
   delete: jest.fn(),
 };
+
 export const coinRepository = {
-  findById: jest.fn().mockImplementation((entity) => entity),
+  findById: jest.fn(),
   update: jest.fn(),
 };
+
 export const coinsToWalletRepository = {
-  findByCoinId: jest.fn().mockImplementation((entity) => entity),
+  findByCoinId: jest.fn(),
   update: jest.fn(),
+};
+
+export const clientFavoriteOffersRepository = {
+  findByClientId: jest.fn(),
+  addFavoriteOffer: jest.fn(),
 };

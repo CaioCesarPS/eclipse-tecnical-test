@@ -22,8 +22,11 @@ export class OffersEntity {
   @Column({ name: 'coin_name' })
   coinName: string;
 
-  @Column()
-  value: number;
+  @Column({ name: 'coin_quantity' })
+  coinQuantity: number;
+
+  @Column({ name: 'total_offer_value' })
+  totalOfferValue: number;
 
   @Column({ default: true })
   active: boolean;

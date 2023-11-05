@@ -12,7 +12,9 @@ import { DeleteOfferDTO } from 'src/application/input/delete-offer.dto';
 import { ClientFavoriteOfferUseCase } from 'src/domain/use-cases/add-client-favorite-offer.usecase';
 import { CreateNewOfferUseCase } from 'src/domain/use-cases/create-new-offer.usecase';
 import { DeleteOfferUseCase } from 'src/domain/use-cases/delete-offer.usecase';
+import { FindClientFavoriteOffer } from 'src/domain/use-cases/find-client-favorite-offer.usecase';
 import { ListTodayOffersUseCase } from 'src/domain/use-cases/list-today-offers.usecase';
+import { ClientFavoriteOffersEntity } from 'src/shared/domain/infrastructure/typeorm/entities/client-favorite-offers-entity';
 import { OffersEntity } from 'src/shared/domain/infrastructure/typeorm/entities/offer-entity';
 import { Pagination } from 'src/shared/domain/utils/pagination';
 
@@ -23,6 +25,7 @@ export class OfferController {
     private readonly listTodayOffersUseCase: ListTodayOffersUseCase,
     private readonly deleteOfferUseCase: DeleteOfferUseCase,
     private readonly addFavoriteOffer: ClientFavoriteOfferUseCase,
+    private readonly findClientFavoriteOffers: FindClientFavoriteOffer,
   ) {}
 
   @Post('create-offer')
@@ -42,11 +45,19 @@ export class OfferController {
     return await this.listTodayOffersUseCase.execute(page);
   }
 
-  @Post('add-favorite-offer/:offerId/client/:clientId')
+  @Post('add-favorite-offer/offer/:offerId/client/:clientId')
   async addClientFavoriteOffer(
     @Param('offerId') offerId: number,
     @Param('clientId') clientId: number,
   ) {
     return await this.addFavoriteOffer.execute(offerId, clientId);
+  }
+
+  @Get('client-favorite-offers/:clientId')
+  async listClientFavoriteOffers(
+    @Param('clientId') clientId: number,
+    @Query('page') page: number,
+  ): Promise<Pagination<ClientFavoriteOffersEntity[]>> {
+    return await this.findClientFavoriteOffers.execute(clientId, page);
   }
 }

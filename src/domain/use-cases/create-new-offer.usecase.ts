@@ -51,7 +51,7 @@ export class CreateNewOfferUseCase {
       });
     }
 
-    if (coinToWalletBalance.balance < value) {
+    if (coinToWalletBalance.coinQuantity < value) {
       throw new BadRequestException({
         message: 'You do not have enough coins to make this offer',
       });
@@ -65,16 +65,16 @@ export class CreateNewOfferUseCase {
       value,
     });
 
-    const newCoinBalance = coinToWalletBalance.balance - offer.value;
+    const newCoinBalance = coinToWalletBalance.coinQuantity - offer.value;
 
     const updatedCoinBalance = {
       id: coinToWalletBalance.id,
       coinId: coinToWalletBalance.coinId,
       walletId: coinToWalletBalance.walletId,
-      balance: newCoinBalance,
+      coinQuantity: newCoinBalance,
     };
 
-    offer.validateOffer(coinToWalletBalance.balance);
+    offer.validateOffer(coinToWalletBalance.coinQuantity);
 
     await this.offerRepository.create(offer);
     await this.coinsToWalletRepository.update(updatedCoinBalance);

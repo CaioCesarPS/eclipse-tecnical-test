@@ -13,6 +13,9 @@ export class CoinEntity {
   @Column()
   name: string;
 
+  @Column({ name: 'current_price' })
+  currentPrice: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 }

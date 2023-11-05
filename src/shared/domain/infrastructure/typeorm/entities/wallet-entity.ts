@@ -13,6 +13,9 @@ export class WalletEntity {
   @Column({ name: 'coin_id' })
   coinId?: number;
 
+  @Column({ name: 'balance' })
+  balance: number;
+
   @Column({ name: 'client_id' })
   clientId: number;
 
