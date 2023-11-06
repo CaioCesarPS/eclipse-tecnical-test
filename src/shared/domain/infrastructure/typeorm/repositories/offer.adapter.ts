@@ -115,4 +115,8 @@ export class OfferAdapter implements OfferRepository {
       },
     );
   }
+
+  async update(offer: OffersEntity): Promise<void> {
+    await this.offerRepository.update(offer.id, offer);
+  }
 }

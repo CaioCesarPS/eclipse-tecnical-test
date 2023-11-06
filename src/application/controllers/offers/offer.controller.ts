@@ -10,6 +10,7 @@ import {
 import { CreateOfferDTO } from 'src/application/input/create-offer.dto';
 import { DeleteOfferDTO } from 'src/application/input/delete-offer.dto';
 import { ClientFavoriteOfferUseCase } from 'src/domain/use-cases/add-client-favorite-offer.usecase';
+import { BuyOfferUseCase } from 'src/domain/use-cases/buy-offer.usecase';
 import { CreateNewOfferUseCase } from 'src/domain/use-cases/create-new-offer.usecase';
 import { DeleteOfferUseCase } from 'src/domain/use-cases/delete-offer.usecase';
 import { FindClientFavoriteOffer } from 'src/domain/use-cases/find-client-favorite-offer.usecase';
@@ -26,6 +27,7 @@ export class OfferController {
     private readonly deleteOfferUseCase: DeleteOfferUseCase,
     private readonly addFavoriteOffer: ClientFavoriteOfferUseCase,
     private readonly findClientFavoriteOffers: FindClientFavoriteOffer,
+    private readonly buyOfferUseCase: BuyOfferUseCase,
   ) {}
 
   @Post('create-offer')
@@ -59,5 +61,10 @@ export class OfferController {
     @Query('page') page: number,
   ): Promise<Pagination<ClientFavoriteOffersEntity[]>> {
     return await this.findClientFavoriteOffers.execute(clientId, page);
+  }
+
+  @Post('buy-offer')
+  async buyOffer(@Body() buyOfferDto: any) {
+    await this.buyOfferUseCase.execute(buyOfferDto);
   }
 }

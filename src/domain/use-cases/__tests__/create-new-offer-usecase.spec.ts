@@ -44,7 +44,7 @@ describe('Add Client Favorite Offer Use Case', () => {
       adapter.execute({
         clientId: 1,
         coinId: 1,
-        value: 10,
+        quantityOfCoins: 10,
         walletId: 1,
       }),
     ).resolves;
@@ -79,7 +79,7 @@ describe('Add Client Favorite Offer Use Case', () => {
       adapter.execute({
         clientId: 1,
         coinId: 1,
-        value: 10,
+        quantityOfCoins: 10,
         walletId: 1,
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
@@ -108,7 +108,7 @@ describe('Add Client Favorite Offer Use Case', () => {
       adapter.execute({
         clientId: 1,
         coinId: 1,
-        value: 101,
+        quantityOfCoins: 101,
         walletId: 1,
       }),
     ).rejects.toBeInstanceOf(Error);

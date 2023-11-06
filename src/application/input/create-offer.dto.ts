@@ -15,5 +15,5 @@ export class CreateOfferDTO {
 
   @IsNumber()
   @IsNotEmpty()
-  value: number;
+  quantityOfCoins: number;
 }

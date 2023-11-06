@@ -4,4 +4,5 @@ export const WALLET_REPOSITORY = 'WALLET_REPOSITORY';
 
 export interface WalletRepository {
   findByClientId(id: number): Promise<WalletEntity[]>;
+  update(wallet: WalletEntity): Promise<void>;
 }

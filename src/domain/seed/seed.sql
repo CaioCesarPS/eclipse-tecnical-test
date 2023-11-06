@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS coins;
 DROP TABLE IF EXISTS wallets;
 DROP TABLE IF EXISTS offers;
 DROP TABLE IF EXISTS coins_to_wallet;
+DROP TABLE IF EXISTS client_favorites_offers;
 
 CREATE TABLE IF NOT EXISTS public.clients (
   id SERIAL PRIMARY KEY,
@@ -20,7 +21,6 @@ CREATE TABLE IF NOT EXISTS public.coins (
 
 CREATE TABLE IF NOT EXISTS public.wallets (
   id SERIAL PRIMARY KEY,
-  coin_id integer,
   balance integer NOT NULL DEFAULT 0,
   client_id integer NOT NULL,
   created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),

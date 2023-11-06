@@ -4,7 +4,9 @@ interface OfferProps {
   clientId: number;
   walletId: number;
   coinName: string;
-  value: number;
+  coinQuantity: number;
+  totalOfferValue: number;
+  active?: boolean;
 }
 
 export class Offer {
@@ -13,24 +15,28 @@ export class Offer {
   clientId: number;
   walletId: number;
   coinName: string;
-  value: number;
+  coinQuantity: number;
+  totalOfferValue: number;
+  active?: boolean;
 
   constructor(props: OfferProps) {
     this.id = props.id;
     this.giftCounterId = props.giftCounterId;
     this.clientId = props.clientId;
-    this.coinName = props.coinName;
     this.walletId = props.walletId;
-    this.value = props.value;
+    this.coinName = props.coinName;
+    this.coinQuantity = props.coinQuantity;
+    this.totalOfferValue = props.totalOfferValue;
+    this.active = props.active ?? true;
   }
 
   static create(props: Offer): Offer {
     return new Offer(props);
   }
 
-  public validateOffer(coinBalance: number) {
-    if (this.value > coinBalance) {
-      throw new Error('Insufficient funds');
+  public validateOffer(offerCoinQuantity: number) {
+    if (this.coinQuantity > offerCoinQuantity) {
+      throw new Error('Insufficient coins to create offer');
     }
   }
 }

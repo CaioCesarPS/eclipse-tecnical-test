@@ -11,18 +11,30 @@ export class CoinsToWalletAdapter implements CoinsToWalletRepository {
     private readonly coinToWalletRepository: Repository<CoinsToWalletEntity>,
   ) {}
 
-  async findByCoinId(id: number): Promise<CoinsToWalletEntity> {
+  async findByCoinId(
+    id: number,
+    walletId: number,
+  ): Promise<CoinsToWalletEntity> {
     return await this.coinToWalletRepository.findOne({
-      where: { coinId: id },
+      where: { coinId: id, walletId },
     });
   }
   async update(coin: CoinsToWalletEntity): Promise<void> {
-    const updatedCoinBalance = {
-      coinId: coin.coinId,
-      walletId: coin.walletId,
-      coinQuantity: coin.coinQuantity,
-    };
+    await this.coinToWalletRepository.update(
+      { id: coin.id, walletId: coin.walletId },
+      { coinQuantity: coin.coinQuantity },
+    );
+  }
 
-    await this.coinToWalletRepository.update(coin.id, updatedCoinBalance);
+  findByWalletId(walletId: number): Promise<CoinsToWalletEntity> {
+    return this.coinToWalletRepository.findOne({
+      where: { walletId },
+    });
+  }
+
+  findById(id: number): Promise<CoinsToWalletEntity> {
+    return this.coinToWalletRepository.findOne({
+      where: { id },
+    });
   }
 }

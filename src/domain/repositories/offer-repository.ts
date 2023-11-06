@@ -17,4 +17,5 @@ export interface OfferRepository {
   create(offer: Offer): Promise<void>;
   findByToday(page: number): Promise<Pagination<OffersEntity[]>>;
   delete({ offerId, coinId, walletId }: ClientOfferRequest): Promise<void>;
+  update(offer: OffersEntity): Promise<void>;
 }

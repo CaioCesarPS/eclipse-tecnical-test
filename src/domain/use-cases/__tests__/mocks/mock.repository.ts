@@ -1,3 +1,4 @@
+import { WalletEntity } from '../../../../shared/domain/infrastructure/typeorm/entities/wallet-entity';
 import { ClientsEntity } from '../../../../shared/domain/infrastructure/typeorm/entities/client-entity';
 import { OffersEntity } from '../../../../shared/domain/infrastructure/typeorm/entities/offer-entity';
 
@@ -10,13 +11,13 @@ export const makeClient = (id: number, name: string) => {
   return clientEntity;
 };
 
-export const makeWallet = (id: number, coinId: number, clientId: number) => {
-  return {
-    id,
-    coinId,
-    clientId,
-    createdAt: new Date(),
-  };
+export const makeWallet = (id: number, balance: number, clientId: number) => {
+  const wallet = new WalletEntity();
+  wallet.id = id;
+  wallet.balance = balance;
+  wallet.clientId = clientId;
+  wallet.createdAt = new Date();
+  return wallet;
 };
 
 export const makeCoin = (id: number, name: string) => {
@@ -67,6 +68,7 @@ export const clientRepository = {
 
 export const walletRepository = {
   findByClientId: jest.fn(),
+  update: jest.fn(),
 };
 
 export const offerRepository = {
@@ -75,6 +77,7 @@ export const offerRepository = {
   findById: jest.fn(),
   findByToday: jest.fn(),
   delete: jest.fn(),
+  update: jest.fn(),
 };
 
 export const coinRepository = {
@@ -85,6 +88,8 @@ export const coinRepository = {
 export const coinsToWalletRepository = {
   findByCoinId: jest.fn(),
   update: jest.fn(),
+  findByWalletId: jest.fn(),
+  findById: jest.fn(),
 };
 
 export const clientFavoriteOffersRepository = {

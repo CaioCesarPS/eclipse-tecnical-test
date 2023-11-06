@@ -21,7 +21,7 @@ import {
   COINS_TO_WALLET_REPOSITORY,
   CoinsToWalletRepository,
 } from '../repositories/coins-to-wallet-repository';
-
+import { CoinsToWalletEntity } from '../../shared/domain/infrastructure/typeorm/entities/coins-to-wallet';
 @Injectable()
 export class CreateNewOfferUseCase {
   constructor(
@@ -37,12 +37,19 @@ export class CreateNewOfferUseCase {
     private readonly coinsToWalletRepository: CoinsToWalletRepository,
   ) {}
 
-  async execute({ clientId, coinId, value, walletId }: CreateOfferDTO) {
+  async execute({
+    clientId,
+    coinId,
+    quantityOfCoins,
+    walletId,
+  }: CreateOfferDTO) {
     const client = await this.clientRepository.findById(clientId);
     const coin = await this.coinRepository.findById(coinId);
-    const wallet = await this.walletRepository.findByClientId(client.id);
-    const coinToWalletBalance =
-      await this.coinsToWalletRepository.findByCoinId(coinId);
+    const wallet = await this.walletRepository.findByClientId(walletId);
+    const coinToWalletBalance = await this.coinsToWalletRepository.findByCoinId(
+      coinId,
+      walletId,
+    );
     const offers = await this.offerRepository.findByClientId(client.id);
 
     if (offers.count >= 5) {
@@ -51,28 +58,34 @@ export class CreateNewOfferUseCase {
       });
     }
 
-    if (coinToWalletBalance.coinQuantity < value) {
+    if (coinToWalletBalance.coinQuantity < quantityOfCoins) {
       throw new BadRequestException({
         message: 'You do not have enough coins to make this offer',
       });
     }
 
+    const totalOfferValue =
+      quantityOfCoins * coin.find((coin) => coin.id === coinId).currentPrice;
+
+    const toDomainWallets = wallet.map((wallet) => wallet.toDomain());
+
     const offer = new Offer({
       clientId: client.toDomain().id,
       coinName: coin.find((coin) => coin.id === coinId).name,
-      walletId: wallet.find((wallet) => walletId === wallet.id).id,
+      walletId: toDomainWallets.find((wallet) => walletId === wallet.id).id,
+      coinQuantity: quantityOfCoins,
+      totalOfferValue,
       giftCounterId: 1,
-      value,
     });
 
-    const newCoinBalance = coinToWalletBalance.coinQuantity - offer.value;
+    const newCoinBalance =
+      coinToWalletBalance.coinQuantity - offer.coinQuantity;
 
-    const updatedCoinBalance = {
-      id: coinToWalletBalance.id,
-      coinId: coinToWalletBalance.coinId,
-      walletId: coinToWalletBalance.walletId,
-      coinQuantity: newCoinBalance,
-    };
+    const updatedCoinBalance = new CoinsToWalletEntity();
+    updatedCoinBalance.id = coinToWalletBalance.id;
+    updatedCoinBalance.coinId = coinToWalletBalance.coinId;
+    updatedCoinBalance.walletId = coinToWalletBalance.walletId;
+    updatedCoinBalance.coinQuantity = newCoinBalance;
 
     offer.validateOffer(coinToWalletBalance.coinQuantity);
 

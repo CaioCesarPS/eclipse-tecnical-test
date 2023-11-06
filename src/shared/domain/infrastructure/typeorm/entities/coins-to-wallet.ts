@@ -21,4 +21,12 @@ export class CoinsToWalletEntity {
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt?: Date;
+
+  public addCoinsToWallet(coinQuantity: number): void {
+    this.coinQuantity += coinQuantity;
+  }
+
+  public removeCoinsToWallet(coinQuantity: number): void {
+    this.coinQuantity -= coinQuantity;
+  }
 }

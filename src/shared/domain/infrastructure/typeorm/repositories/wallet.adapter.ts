@@ -17,4 +17,15 @@ export class WalletAdapter implements WalletRepository {
     });
     return client;
   }
+
+  async update(wallet: WalletEntity): Promise<void> {
+    await this.walletRepository.update(
+      {
+        id: wallet.id,
+      },
+      {
+        balance: wallet.balance,
+      },
+    );
+  }
 }
