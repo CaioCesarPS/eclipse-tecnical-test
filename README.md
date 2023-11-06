@@ -1,3 +1,16 @@
+# Como Rodar
+
+1- Tenha o Docker e o Docker Compose instalado ([Download](https://docs.docker.com/desktop/install/windows-install/))
+2- Tenha o Insomnia instalado ([Download](https://insomnia.rest/download))
+3- Importe para o Insomnia o arquivo **insomnia_routes** ([Tutorial para importação](https://docs.insomnia.rest/insomnia/import-export-data))
+4- Após as devidas instalações, dentro da pasta do projeto execute ```docker compose up -d --build```.
+5- Depois de importado o arquivo no insomia agora é necessario fazer as requests aqui está o [link do teste tecnico](https://meteor-ocelot-f0d.notion.site/Node-js-9c193acc93bc492288c258d9125b5805).
+6- A ordem recomendada de requisições a se fazer é
+6.1- Criar uma Offer.
+6.2- Listar as Offers do dia.
+6.3- Adicionar uma Offer aos favoritos.
+6.4- Comprar ou Deletar uma offer.
+
 # Fase 2: Refinamento
 
 Q: Quais são os requisitos funcionais e não funcionais que precisa ser implementado?
