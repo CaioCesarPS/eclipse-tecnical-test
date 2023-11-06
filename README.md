@@ -6,7 +6,7 @@
 
 3- Importe para o Insomnia o arquivo **insomnia_routes** ([Tutorial para importação](https://docs.insomnia.rest/insomnia/import-export-data)).
 
-4- Após as devidas instalações, dentro da pasta do projeto execute ```docker compose up -d --build```.
+4- Após as devidas instalações, dentro da pasta do projeto execute `docker compose up -d --build`.
 
 5- Depois de importado o arquivo no insomia agora é necessario fazer as requests aqui está o [link do teste tecnico](https://meteor-ocelot-f0d.notion.site/Node-js-9c193acc93bc492288c258d9125b5805).
 
@@ -30,7 +30,7 @@ Q: Ainda se tratando de resiliencia, ainda no topico de transações, devemos im
 
 Q: Em que pontos do fluxo do balcão devemos colocar as mensagens de erro? devemos considerar que o front sempre mandará as informação certar e que existem no nosso banco?
 
-Q: Não vi a funcionalidade de remover os favoritos, deve ser criada? ou assim que a oferta for comprada por alguem ela deverá automaticamente  sumir da lista de todos os que favoritaram?
+Q: Não vi a funcionalidade de remover os favoritos, deve ser criada? ou assim que a oferta for comprada por alguem ela deverá automaticamente sumir da lista de todos os que favoritaram?
 
 # Fase 3: Final
 
